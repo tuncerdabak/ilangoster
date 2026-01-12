@@ -306,9 +306,9 @@ unset($_SESSION['message']);
                     <!-- Fotoğraflar -->
                     <div class="mb-6">
                         <label for="photos" class="block text-left text-sm font-medium text-gray-700 mb-2">
-                            Mülk Fotoğrafları (Birden Fazla Seçilebilir)
+                            Mülk Fotoğrafları (Güvenlik protokolü gereği tek tek seçilmelidir)
                         </label>
-                        <input type="file" id="photos" name="photos[]" multiple required
+                        <input type="file" id="photos" name="photos[]" required
                             accept="image/jpeg, image/png, image/webp"
                             class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 cursor-pointer">
                     </div>

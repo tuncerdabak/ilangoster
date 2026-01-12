@@ -147,7 +147,8 @@ $total_photos_used = $stmt_photo_usage->fetchColumn() ?: 0;
                         </div>
                         <div class="mt-4">
                             <a href="index.php#packages"
-                                class="w-full inline-flex justify-center items-center px-4 py-4 border-2 border-white/10 text-xs sm:text-sm font-black rounded-xl text-white bg-gradient-to-r from-orange-600 to-red-600 shadow-2xl transform transition-all duration-300 hover:-translate-y-1 active:scale-95 animate-pulse-gold uppercase">
+                                class="w-full inline-flex justify-center items-center px-4 py-4 rounded-xl text-white font-black text-xs sm:text-sm uppercase shadow-lg transform transition-all hover:scale-[1.02] active:scale-95 animate-pulse-gold"
+                                style="background-color: #ea580c; background-image: linear-gradient(to right, #ea580c, #dc2626);">
                                 ⭐ PAKETİNİ YÜKSELT & AYRICALIK KAZAN
                             </a>
                         </div>

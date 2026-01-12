@@ -236,7 +236,7 @@ unset($_SESSION['message']);
                 <a href="#packages" class="text-gray-600 hover:text-green-600 font-medium">Fiyatlar</a>
                 <?php if (isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])): ?>
                     <a href="<?php echo isset($_SESSION['admin_id']) ? 'admin.php' : 'dashboard.php'; ?>"
-                        class="text-indigo-600 hover:text-indigo-800 font-medium">İlanlarım</a>
+                        class="text-indigo-600 hover:text-indigo-800 font-medium">Panelim</a>
                 <?php else: ?>
                     <a href="login.php" class="text-indigo-600 hover:text-indigo-800 font-medium">Giriş</a>
                 <?php endif; ?>

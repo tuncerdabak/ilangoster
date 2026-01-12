@@ -168,7 +168,7 @@ $total_photos_used = $stmt_photo_usage->fetchColumn() ?: 0;
                         <!-- Galeri Limiti -->
                         <div class="mb-4">
                             <div class="flex justify-between items-end mb-1">
-                                <span class="text-sm font-bold text-gray-700">İlan (Galeri)</span>
+                                <span class="text-sm font-bold text-gray-700">Portföy</span>
                                 <span class="text-xs font-medium text-gray-500"><?= $gallery_count ?> /
                                     <?= $package_info['gallery_limit'] ?></span>
                             </div>
@@ -236,7 +236,7 @@ $total_photos_used = $stmt_photo_usage->fetchColumn() ?: 0;
                 <h3 class="text-lg leading-6 font-medium text-gray-900">Galerilerim</h3>
                 <a href="dashboard_new.php"
                     class="bg-green-600 text-white px-4 py-2 rounded text-sm font-bold hover:bg-green-700 transition">
-                    + Yeni İlan Yükle
+                    + Yeni Portföy Yükle
                 </a>
             </div>
 
@@ -322,7 +322,7 @@ $total_photos_used = $stmt_photo_usage->fetchColumn() ?: 0;
                 </svg>
             </button>
 
-            <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">İlanı Paylaş</h3>
+            <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Resimleri Paylaş</h3>
 
             <div class="space-y-6">
                 <input type="hidden" id="modalGalleryId">
@@ -408,7 +408,7 @@ $total_photos_used = $stmt_photo_usage->fetchColumn() ?: 0;
 
             if (isQuick) {
                 // QUICK SHARE: Just open WA with the message, let user pick contact
-                const text = `Merhaba, ilan fotoğraflarına bu linkten bakabilirsiniz: https://ilangoster.com/g/${token}`;
+                const text = `Merhaba, portföy fotoğraflarına bu linkten bakabilirsiniz: https://ilangoster.com/g/${token}`;
                 window.location.href = `https://wa.me/?text=${encodeURIComponent(text)}`;
                 closeShareModal();
                 return;

@@ -37,7 +37,7 @@ $images = $stmt_images->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>İlanı Düzenle - İlanGöster</title>
+    <title>Portföyü Düzenle - İlanGöster</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         body {
@@ -85,7 +85,7 @@ $images = $stmt_images->fetchAll();
 
     <div class="max-w-5xl mx-auto py-8 px-4">
         <header class="mb-8">
-            <h1 class="text-2xl font-black text-gray-900 leading-tight">İlan Fotoğraflarını Yönet</h1>
+            <h1 class="text-2xl font-black text-gray-900 leading-tight">Portföy Fotoğraflarını Yönet</h1>
             <p class="text-gray-500 text-sm mt-1">Galeri #
                 <?= $gallery['id'] ?> (
                 <?= count($images) ?> Fotoğraf)
@@ -96,7 +96,7 @@ $images = $stmt_images->fetchAll();
             <div class="bg-white rounded-2xl p-12 text-center shadow-sm border border-gray-100">
                 <div class="text-5xl mb-4">🖼️</div>
                 <h3 class="text-xl font-bold text-gray-800">Hiç fotoğraf kalmadı</h3>
-                <p class="text-gray-500 mt-2 mb-6">Bu ilan şu anda boş görünüyor.</p>
+                <p class="text-gray-500 mt-2 mb-6">Bu portföy şu anda boş görünüyor.</p>
                 <a href="dashboard_new.php" class="bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold">Yeni Fotoğraf
                     Yükle</a>
             </div>

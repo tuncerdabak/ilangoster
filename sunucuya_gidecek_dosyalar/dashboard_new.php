@@ -28,7 +28,7 @@ if (!$user) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Yeni İlan Yükle - Panelim</title>
+    <title>Yeni Portföy Yükle - Panelim</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         /* Loading Overlay */
@@ -149,7 +149,7 @@ if (!$user) {
         </div>
 
         <div class="bg-white p-8 rounded-xl shadow-lg">
-            <h1 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">Yeni İlan Fotoğrafları Yükle</h1>
+            <h1 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">Yeni Portföy Fotoğrafları Yükle</h1>
 
             <form action="upload.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="source" value="dashboard">

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin.php
+Disallow: /admin_actions.php
+Disallow: /uploads/
+Disallow: /g/
+
+Sitemap: https://ilangoster.com/sitemap.xml

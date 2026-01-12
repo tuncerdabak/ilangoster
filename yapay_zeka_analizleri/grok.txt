@@ -1,0 +1,75 @@
+ilangoster.com Teknik İnceleme ve ÖnerilerGirişBu rapor, https://ilangoster.com web sitesinin teknik incelemesini, önerilerini ve SEO yorumlarını içermektedir. Analiz, siteyi tarama araçları kullanılarak yapılmıştır. Site, emlakçılar için güvenli resim paylaşım platformu olarak tasarlanmış olup, PHP ve MySQL ile geliştirildiği belirtilmiştir. İnceleme, ana sayfa içeriği, sitemap.xml ve robots.txt dosyalarına dayanmaktadır. Site içeriği kısmen sınırlı olduğundan (örneğin, meta tag'ler ve script'ler eksik), bazı çıkarımlar kullanıcı açıklamasına göre yapılmıştır.Site özellikleri (kullanıcı açıklamasına göre):Emlakçılar resim yükler, filigran (yatay 45 dereceli, çoklu) eklenir.
+Kimse'nin bilgileri görünmez.
+Resimler 24 saat sonra otomatik silinir.
+WhatsApp üzerinden link paylaşımı.
+Sadece link sahipleri erişir.
+
+Teknik İncelemeKullanılan TeknolojilerBackend: PHP kullanıldığı doğrulanmıştır (URL'lerde .php uzantıları: index.php, login.php, pay.php). MySQL veritabanı kullanıcı tarafından belirtilmiş, ancak kaynak kodunda doğrudan doğrulanamadı (muhtemelen resim yükleme, filigran ekleme ve silme işlemleri için kullanılır).
+Frontend: Kaynak kodunda script veya CSS framework'leri (örneğin, Bootstrap, jQuery) tespit edilemedi. Sayfa basit HTML yapısında görünüyor. Resim yükleme formu ana sayfada görünmüyor, muhtemelen login sonrası erişilebilir.
+Sunucu ve Güvenlik: HTTPS kullanımı doğrulanamadı (analizde belirtilmemiş, ancak modern siteler için zorunlu). Formlar ana sayfada yok, ancak login.php ve pay.php gibi sayfalarda muhtemel formlar var. Görünür güvenlik sorunları: CSRF koruması, input validation belirtilmemiş. Filigran ekleme sunucu tarafında PHP ile yapılabilir (örneğin, GD veya ImageMagick kütüphaneleriyle).
+Veri Yönetimi: Resimlerin 24 saat sonra silinmesi, muhtemelen cron job veya MySQL trigger ile yönetiliyor. Link paylaşımı, benzersiz token'lar ile erişim kısıtlaması içerebilir.
+Potansiyel Sorunlar:Sayfa hızı: Belirlenemedi, ancak resim yoğun bir site için optimizasyon eksikliği (compression, lazy loading) yavaşlığa neden olabilir.
+Mobil Uyumluluk: Viewport meta tag yok, bu yüzden mobil cihazlarda responsive olmayabilir.
+Erişilebilirlik: Image alt tag'ler yok, bu ekran okuyucular için sorun.
+
+Güçlü YönlerBasit yapı: PHP/MySQL ile hızlı geliştirilebilir, bakım kolay.
+Otomatik silme: Veri gizliliği için iyi (GDPR uyumlu olabilir).
+Filigran: Kırılmaz filigran teknolojisi (kullanıcı iddiası), muhtemelen sunucu tarafında uygulanarak kopyalamayı zorlaştırır.
+
+Zayıf YönlerEksik meta veriler ve script'ler: Kaynak kodunda modern web standartları eksik.
+Güvenlik: Potansiyel SQL injection veya file upload vulnerabilities (resim yükleme için).
+Ölçeklenebilirlik: Yüksek trafik için MySQL optimizasyonu gerekebilir.
+
+ÖnerilerTeknik ÖnerilerGüvenlik İyileştirmeleri:HTTPS zorunlu kılın (Let's Encrypt ile ücretsiz sertifika).
+Formlar için CSRF token'ları ekleyin (PHP session ile).
+Resim yükleme için dosya tipi/do Boyut kısıtlaması, malware taraması (ClamAV entegrasyonu).
+SQL injection önleme: Prepared statements kullanın (PDO veya mysqli).
+Otomatik silme için güvenilir cron job kurun.
+
+Performans İyileştirmeleri:Resimler için compression (PHP GD ile) ve CDN entegrasyonu (Cloudflare).
+Sayfa hızı için minify CSS/JS, lazy loading images.
+Caching: PHP opcode cache (OPcache) ve MySQL query cache.
+
+Kullanıcı Deneyimi:Mobil responsive tasarım: Bootstrap veya Tailwind CSS ekleyin, viewport meta ekleyin (<meta name="viewport" content="width=device-width, initial-scale=1">).
+Login sistemi: OAuth (Google) entegrasyonu emlakçılar için kolaylık sağlar.
+Hata yönetimi: 404 sayfaları için custom error handling.
+
+Fonksiyonel Geliştirmeler:Filigran: Dinamik filigran (kullanıcı logosu ekleme opsiyonu).
+Link süresi: 24 saat yerine ayarlanabilir süre.
+Analitik: Kullanım istatistikleri için Google Analytics entegrasyonu.
+
+Bakım ve Test:Versiyon kontrol: Git kullanın.
+Test: Unit test'ler (PHPUnit) ve güvenlik taraması (OWASP ZAP).
+
+SEO Yorumları ve ÖnerilerMevcut DurumTitle ve Headings: Title descriptive ("ilangoster: Güvenli Portföy Resim Paylaşım Platformu"), hedef kelimeler içeriyor (güvenli, resim paylaşım). Headings iyi yapılandırılmış (H1-H3), anahtar kelimeler kullanılıyor (güvenlik, filigran).
+Meta Tags: Meta description, keywords yok. Bu, arama motorlarının siteyi doğru indekslemesini engeller.
+Sitemap.xml: Var, 5 URL listeliyor (ana sayfa, index.php, login.php, payment link'ler). Lastmod tarihi güncel (2025-12-10), priority iyi. Ancak update frequency (changefreq) eksik.
+Robots.txt: Yok (404 hatası). Bu, arama motorlarının tüm siteyi taramasına izin verir, ancak disallow kuralları eklenmeli (örneğin, admin sayfaları).
+Diğer SEO Elementleri:Canonical tags: Yok, duplicate content riski.
+Structured data (Schema.org): Yok, zengin snippet'ler için fırsat kaçırılıyor.
+Image alt tags: Yok, görsel aramalarda dezavantaj.
+Links: Internal link'ler var, ancak external yok.
+HTTPS: Belirlenemedi, ama yoksa ceza.
+Mobil: Viewport yok, Google mobile-first indexing için sorun.
+Sayfa Hızı: Belirlenemedi, ancak basit yapı hızlı olabilir.
+
+Genel SEO Skoru: Düşük-orta (temel kelimeler var, ama kritik eksiklikler).SEO ÖnerileriOn-Page SEO:Meta description ekleyin (150-160 karakter, anahtar kelimelerle: "Emlakçılar için güvenli portföy resim paylaşım platformu. Filigran ekleyin, 24 saatte silinsin.").
+Meta keywords: Ekleyin, ama modern SEO'da az etkili (hedef: emlak resim paylaşım, filigranlı ilan, güvenli emlak).
+Headings: Devam edin, her sayfaya unique H1.
+Images: Tüm resimlere alt tag ekleyin (örneğin, "Emlak portföyü güvenli paylaşım").
+
+Teknik SEO:Robots.txt oluşturun: User-agent: * Disallow: /admin/ gibi, sitemap referansı ekleyin (Sitemap: https://ilangoster.com/sitemap.xml).
+Sitemap'i genişletin: Daha fazla sayfa ekleyin, changefreq ekleyin (örneğin, daily).
+Canonical tags: Duplicate URL'ler için ekleyin (örneğin, index.php ve / için).
+Structured data: JSON-LD ile site için FAQSchema veya ProductSchema ekleyin.
+HTTPS: Uygulayın ve HTTP'yi redirect edin.
+
+Off-Page SEO:Backlink'ler: Emlak forumlarında tanıtın.
+Sosyal Medya: X (Twitter) entegrasyonu, paylaşım butonları.
+
+Araçlar ve İzleme:Google Search Console ve Analytics kurun.
+Sayfa hızı testi: Google PageSpeed Insights kullanın, 90+ hedefleyin.
+Anahtar Kelimeler: "emlak resim paylaşım", "filigranlı ilan" için optimize edin.
+
+SonuçSite, niş bir ihtiyaca (emlakçı güvenliği) odaklanmış iyi bir fikir. Ancak teknik olarak temel, SEO açısından eksik. Önerileri uygulayarak daha güvenli, hızlı ve görünür hale getirilebilir. Tam inceleme için kaynak kod erişimi önerilir.
+

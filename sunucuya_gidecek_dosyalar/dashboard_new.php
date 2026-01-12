@@ -290,43 +290,42 @@ if (!$user) {
                 formData.append('photos[]', file);
             });
 
-            // Progress bar'ı simüle et
-            let width = 0;
-            const interval = setInterval(() => {
-                if (width >= 95) {
-                    clearInterval(interval);
-                } else {
-                    let increment = Math.max(0.1, (95 - width) / 20);
-                    width += increment;
-                    progressBar.style.width = width + '%';
-                    statusText.innerText = '%' + Math.floor(width);
-                }
-            }, 100);
+            // --- GERÇEK PROGRESS BAR GÜNCELLEMESİ ---
+            const xhr = new XMLHttpRequest();
 
-            // Gerçekten gönder
-            fetch('upload.php', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => {
-                    if (response.redirected) {
-                        window.location.href = response.url;
+            xhr.upload.addEventListener('progress', function (e) {
+                if (e.lengthComputable) {
+                    const percent = Math.round((e.loaded / e.total) * 95); // 95'te dur, sunucu işlemini bekle
+                    progressBar.style.width = percent + '%';
+                    statusText.innerText = '%' + percent;
+                }
+            });
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        try {
+                            // PHP redirect header gönderirse responseURL değişir
+                            if (xhr.responseURL) {
+                                window.location.href = xhr.responseURL;
+                            } else {
+                                // Fallback: Sayfayı yenile veya yanıtı göster
+                                document.open();
+                                document.write(xhr.responseText);
+                                document.close();
+                            }
+                        } catch (e) {
+                            window.location.href = 'dashboard.php?success=1';
+                        }
                     } else {
-                        // Redirect olmazsa (hata veya json dönmesi durumu)
-                        return response.text().then(text => {
-                            // Eğer sayfa render edildiyse oraya git
-                            document.open();
-                            document.write(text);
-                            document.close();
-                        });
+                        alert('Yükleme sırasında bir hata oluştu.');
+                        overlay.classList.remove('active');
                     }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Yükleme sırasında bir hata oluştu.');
-                    overlay.classList.remove('active');
-                    clearInterval(interval);
-                });
+                }
+            };
+
+            xhr.open('POST', 'upload.php', true);
+            xhr.send(formData);
         });
     </script>
 </body>

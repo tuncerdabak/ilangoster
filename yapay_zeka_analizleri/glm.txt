@@ -1,0 +1,75 @@
+ilangoster.com Teknik ve SEO Analiz Raporu
+Tarih: 24 Mayıs 2024
+Proje: ilangoster.com
+Teknoloji: PHP, MySQL
+Hedef Kitle: Emlak Profesyonelleri (B2B)
+
+1. Özet ve İş Modeli Analizi
+Proje, emlakçılar arası güven sorunu (ilan çalınması ve komisyon kesilmesi) çözmeyi hedefleyen niş ve akıllıca bir B2B araç olarak öne çıkıyor. "Görüntüleyici (Viewer)" linklerinin 24 saat süreyle geçerli olması ve fligranlı (watermark) olması, mülkün gizliliğini korurken pazarlama yapabilmeyi sağlıyor.
+
+Güçlü Yanlar:
+
+Net bir ağrı noktasına (Pain Point) parmak basıyor.
+24 saatlik kendini imha etme mekanizması güvenlik algısını artırıyor.
+WhatsApp entegrasyonu doğrudan kullanım senaryosuna uygun.
+2. Teknik Altyapı ve Öneriler (PHP & MySQL)
+Kullanılan teknoloji yığını (PHP & MySQL) bu proje için uygun ve maliyet etkilidir. Ancak görüntü işleme (image processing) ve otomasyon konularında dikkat edilmesi gereken kritik noktalar vardır.
+
+2.1. Görüntü İşleme ve Performans (En Kritik Kısım)
+Emlak ilanları yüksek çözünürlüklü fotoğraflar içerir. PHP'nin GD kütüphanesi veya ImageMagick ile sunucu tarafında 50+ fotoğrafa fligran basmak hem CPU hem de RAM tüketir.
+
+Öneri 1 (Async Processing): Kullanıcı "Yükle" dediğinde tüm resimleri işlemeyi bekletmeyin. Resimleri sunucuya yükleyin, "İşleniyor" diyerek kuyruğa (Queue) alın. Arka planda (Cron job veya Worker ile) fligran basma işlemini yapın.
+Öneri 2 (Optimizasyon): Yüklenen resimleri otomatik olarak web formatına (WebP veya sıkıştırılmış JPEG) çevirin. Bu, hem WhatsApp gönderimi hem de sayfa yüklenme hızını artırır.
+Öneri 3 (CDN Kullanımı): Fligranlı resimler oluşturulduktan sonra bunları doğrudan kendi sunucunuzda而不是 bir CDN (Cloudflare, AWS S3 vb.) üzerinde saklayın. Bu sayede 24 saatlik süre içinde yüksek trafikte sunucunuz çökmez.
+2.2. Veritabanı Temizliği (Garbage Collection)
+"24 saat sonra silinme" özelliğinin sistem kaynaklarını tüketmemesi gerekiyor.
+
+Mevcut Durum: Muhtemelen sayfaya her girildiğinde kontrol ediliyor veya bir Cron job çalışıyor.
+Öneri: expires_at sütunu eklediğiniz bir tablo yapısı kurun. Her saat başı çalışan bir Cron Job ile süresi dolan kayıtları ve fiziksel dosyaları (unlink fonksiyonu ile) diskten temizleyin.
+2.3. Güvenlik
+Hotlink Koruması: Sadece link sahibinin görmesi isteniyor ancak doğrudan resim URL'sine erişim engellenemez (tarayıcı resim çekmelidir). Ancak, referer kontrolü yaparak resimlerinizin sadece ilangoster.com üzerinden veya WhatsApp WebView'inde çalışmasını sağlayabilirsiniz.
+Brute Force Koruması: Emlakçılar şifreli ilanlar oluşturuyorsa, giriş denemelerini sınırlandırın.
+3. SEO (Arama Motoru Optimizasyonu) Analizi
+Bu projede SEO standart bir blog veya e-ticaret sitesinden farklıdır. İki ayrı yüzey için (Ana Sayfa ve Oluşturulan İlan Linkleri) farklı stratejiler uygulanmalıdır.
+
+3.1. Oluşturulan İlan Linkleri (Özel Sayfalar)
+DURUM: Kritik ve Tehlikeli Alan.
+Bu sayfalar (örn: ilangoster.com/view/xyz123) Google tarafından asla indexlenmemelidir.
+
+Neden?
+İçerik Kısa Ömürlü: Google bir linki indexler, ama 24 saat sonra girince 404 hatası (Sayfa Bulunamadı) alırsa, bu site kalite puanını düşürür.
+Çift İçerik (Duplicate Content): Emlakçının aynı ilanı Sahibinden'de veya Emlakjet'te var. Sizde de varsa Google kimi indexleyeceğini şaşırır.
+Müşteri Gizliliği: Emlakçılar bu linklerin Google'da bulunmasını (kötü niyetli müşterilerin araması sonucu bulması) istemez.
+Çözüm:
+<meta name="robots" content="noindex, nofollow"> etiketini tüm "Görüntüleme" sayfalarına mutlaka ekleyin.
+HTTP Header seviyesinde de X-Robots-Tag: noindex gönderin.
+3.2. Ana Sayfa ve Landing Page
+DURUM: Burası ana kazanım noktasıdır. "Emlakçılar için güvenli ilan paylaşım platformu" diye aranmalı ve siz çıkmalısınız.
+
+Anahtar Kelimeler:
+"Emlakçılar arası ilan paylaşımı"
+"Emlak fotoğrafına fligran basma"
+"Emlakçı için güvenli ilan gönderme"
+"Komisyon hırsızlığına karşı çözüm"
+Teknik SEO:
+Hız (Core Web Vitals): Ana sayfanın açılma hızı çok önemli. Minimal bir tasarım (Landing Page) kullanın. Gereksiz javascript kütüphanelerinden kaçının.
+Mobile Friendly: Emlakçıların %90'ı işlemi telefondan yapıyor. Site mobilde kusursuz olmalı.
+Schema Markup (Yapısal Veri): SoftwareApplication şemasını kullanarak Google'a bu bir araç olduğunu bildirin.
+4. Kullanıcı Deneyimi (UX) ve Arayüz
+Emlakçıların zamanı çok değerlidir ve teknolojiye alışkanlıkları farklı seviyelerdedir.
+
+Sürükle-Bırak (Drag-Drop): Resim yükleme ekranı kesinlikle sürükle-bırak destekli olmalı. Klasik "Gözat" butonu eski kalmıştır.
+Toplu İşlem: 50 resmi tek tek seçmek yerine "Tümünü Seç" veya basılı tutarak çoklu seçim olmalı.
+Tek Tuşla Kopyala: WhatsApp'a gönderilecek linki kopyalama butonu devasa ve belirgin olmalı. Link kopyalandığında "Kopyalandı" uyarısı vermeli.
+Gerisayım Sayacı: Linki açan emlakçıya, "Bu ilan 23 saat 45 dakika sonra silinecektir" şeklinde bir sayaç koyarak aciliyet hissi oluşturun.
+5. İşlevsellik ve Rekabet Avantajı İyileştirmeleri
+Sistemi diğer basık resim paylaşım sitelerinden ayıracak özellikler:
+
+Kendi Logonuzla Fligran (Pro Özellik): Ücretsiz kullanımda "ilangoster.com" fligranı basın. Ancak aylık küçük bir ücret karşılığında emlakçının kendi logosunu resimlerin üzerine (45 derece, yoğunluk ayarlanabilir) basmasına izin verin. Bu büyük bir gelir modeli olabilir.
+Görüntüleme Raporu: Premium üyeler için; "İlan linkini kaç kişi açtı?" raporu sunun. Böylece emlakçı, gönderdiği diğer emlakçının ilana gerçekten bakıp bakmadığını anlar.
+PDF İndirme: Resimleri slayt şeklinde değil, emlakçının kendi sunumunda kullanabilmesi için "Tek Tuşla İndir" özelliği (belki sadece resim sahibine özel şifreli olarak).
+6. Sonuç
+ilangoster.com, emlak sektöründeki "güven" boşluğunu dolduran, ihtiyaç odaklı (Need-based) bir projedir.
+
+Yapılması Gereken En Önemli Adım:
+PHP ile resim işleme kısmını optimize ederek sunucuyu yormamak ve SEO tarafında oluşturulan sayfaları "noindex" yaparak Google kalite skorunu düşürmekten kaçınmaktır.

@@ -9,54 +9,59 @@ function redirect_with_error($message)
     exit;
 }
 
-function process_and_watermark_image($temp_path, $target_path, $watermark_text, $user_id)
+function process_and_watermark_image($temp_path, $target_path, $watermark_text, $user_id, $custom_logo_path = null)
 {
     if (!extension_loaded('imagick')) {
-        // Imagick yüklü değilse, yüklemeyi durdur veya GD fallback yap.
         return false;
     }
 
     try {
         $img = new Imagick($temp_path);
-
-        // --- 1. Güvenlik ve Gizlilik: EXIF/Meta Veri Temizleme ---
         $img->stripImage();
 
-        // --- 2. Boyutlandırma (Performans) ---
-        // Genişliği 1600px'ten büyükse küçült
         if ($img->getImageWidth() > 1600) {
             $img->resizeImage(1600, 0, Imagick::FILTER_LANCZOS, 1);
         }
 
-        // --- 3. Filigran Ayarları (Tekrarlayan 45 derece) ---
-        $draw = new ImagickDraw();
-        $draw->setFontSize(32);
-        $draw->setFillColor('white');
-        $draw->setStrokeAntialias(true);
-        $draw->setTextAntialias(true);
-        $draw->setStrokeOpacity(0.15); // Yarı saydamlık (Daha şeffaf)
-        $draw->setStrokeColor('white');
-        $draw->setStrokeWidth(1);
-
-        // Font dosyasını sunucunuzda bir yere yükleyin ve yolunu buraya verin.
-        // Eğer font yoksa, sadece metni yazacaktır.
-        // $draw->setFont(realpath('font/Arial.ttf')); 
-
-        $final_watermark_text = $watermark_text;
         $w = $img->getImageWidth();
         $h = $img->getImageHeight();
 
-        // 45 derece tersine döndürme (Yazı düz, tuval ters döner)
-        $draw->rotate(-45);
+        if ($custom_logo_path && file_exists($custom_logo_path)) {
+            // --- LOGO FİLİGRAN (Premium) ---
+            $watermark = new Imagick($custom_logo_path);
 
-        // Tekrarlayan desen ile tüm resmi kapla
-        $spacing = 500; // Filigranlar arası boşluk (Seyreltildi)
+            // Logoyu makul bir boyuta getir (Örn: Genişliğin %15'i)
+            $logoW = $w * 0.15;
+            $watermark->resizeImage($logoW, 0, Imagick::FILTER_LANCZOS, 1);
+            $watermark->evaluateImage(Imagick::EVALUATE_MULTIPLY, 0.4, Imagick::CHANNEL_ALPHA); // Şeffaflık
 
-        // 45 derece açıyla yatay ve dikey döngü
-        for ($i = 0; $i < ($w + $h) / cos(deg2rad(45)); $i += $spacing) {
-            for ($j = 0; $j < $w + $h; $j += $spacing) {
-                // AnnotateImage 45 derece eğik yerleştirir
-                $img->annotateImage($draw, $i - $w / 2, $j - $h / 2, 45, $final_watermark_text);
+            // Logoyu 45 derece döndür ve tekrarla
+            $watermark->rotateImage(new ImagickPixel('none'), 45);
+
+            $spacing = 400;
+            for ($x = 0; $x < $w + 500; $x += $spacing) {
+                for ($y = 0; $y < $h + 500; $y += $spacing) {
+                    $img->compositeImage($watermark, Imagick::COMPOSITE_OVER, $x - 200, $y - 200);
+                }
+            }
+            $watermark->clear();
+        } else {
+            // --- METİN FİLİGRAN (Klasik) ---
+            $draw = new ImagickDraw();
+            $draw->setFontSize(32);
+            $draw->setFillColor('white');
+            $draw->setStrokeAntialias(true);
+            $draw->setTextAntialias(true);
+            $draw->setStrokeOpacity(0.15);
+            $draw->setStrokeColor('white');
+            $draw->setStrokeWidth(1);
+            $draw->rotate(-45);
+
+            $spacing = 500;
+            for ($i = 0; $i < ($w + $h) / cos(deg2rad(45)); $i += $spacing) {
+                for ($j = 0; $j < $w + $h; $j += $spacing) {
+                    $img->annotateImage($draw, $i - $w / 2, $j - $h / 2, 45, $watermark_text);
+                }
             }
         }
 
@@ -148,14 +153,39 @@ $gallery_id = $pdo->lastInsertId();
 $uploaded_count = 0;
 foreach ($_FILES['photos']['tmp_name'] as $key => $tmp_name) {
     if (!empty($tmp_name) && $_FILES['photos']['error'][$key] == 0) {
+
+        // --- GÜVENLİK GÜNCELLEMESİ ---
+        // 1. Dosya boyutu kontrolü (Örn: 5MB)
+        if ($_FILES['photos']['size'][$key] > 5 * 1024 * 1024) {
+            continue; // Bu dosyayı atla
+        }
+
+        // 2. MIME Type Kontrolü (Sadece uzantıya güvenme)
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $mimeType = $finfo->file($tmp_name);
+        $allowedMimes = ['image/jpeg', 'image/png', 'image/webp'];
+
+        if (!in_array($mimeType, $allowedMimes)) {
+            continue; // Geçersiz MIME tipi, atla
+        }
+
         $fileType = strtolower(pathinfo($_FILES['photos']['name'][$key], PATHINFO_EXTENSION));
 
         if (in_array($fileType, ['jpg', 'jpeg', 'png', 'webp'])) {
             $fileName = uniqid('img_') . time() . '.' . $fileType;
             $targetFile = UPLOAD_DIR . $fileName;
 
+            // Filigran ve Logo Ayarları
+            $watermark_text = get_setting($pdo, 'watermark_text', WATERMARK_TEXT);
+            $custom_logo_path = null;
+            if (isset($user['id']) && in_array($user['package_name'], ['premium', 'standard'])) {
+                if ($user['custom_logo'] && file_exists(UPLOAD_DIR . $user['custom_logo'])) {
+                    $custom_logo_path = UPLOAD_DIR . $user['custom_logo'];
+                }
+            }
+
             // Imagick ile işlemi gerçekleştir
-            if (process_and_watermark_image($tmp_name, $targetFile, WATERMARK_TEXT, $user_id ?? $agent_phone)) {
+            if (process_and_watermark_image($tmp_name, $targetFile, $watermark_text, $user_id ?? $agent_phone, $custom_logo_path)) {
 
                 // Başarılıysa DB'ye kaydet
                 $stmt_image = $pdo->prepare("INSERT INTO images (gallery_id, image_path) VALUES (?, ?)");

@@ -1,0 +1,10 @@
+https://ilangoster.com 
+Hedef Kullanıcı: Sadece emlakçılar 
+Amaç: Emlakçıların bir mülkü pazarlarken birbirine resim göndermesi sonrasında daha sonra başka birisi izinsiz ilan paylaşımı yapabiliyor o yüzden herkes birbirinden çekiniyor ilan sitelerindeki yayınladıkları link paylaşınca da diğer 2. Emlakçının müşterisi art niyetli olarak kendi Emlakçısını aradan çıkartıp komisyon vermemek için ilan sahibi Emlakçı ya ulaşıp orayı kiralamak veya satın almak için uğraşıyor.
+
+Gerçek ilana çıkan Emlakçı bu sisteme resimleri yüklüyor ama üzerinde fligranımız ekleniyor (yatay 45 dereceli ve çok adetli) sayfa da hiç kimsenin bilgisi olamadan ve resimler 24 saat sonra siliniyor 
+WhatsApp üzerinden direkt gönderiyor diğer Emlakçı da kendi müşterisine gönderiyor o linke sahip olan kişiler resimleri görüyor 24 saat sonra otomatik siliniyor
+
+bu siteyi php ve mysql ile yaptım.
+
+Bu siteyi teknik olarak inceleyip önerilerini ve Seo yorumlarını md dosyası olarak verir misin?

@@ -1,0 +1,122 @@
+Teknik İnceleme: ilangoster.com
+Tarih: 13 Ocak 2026
+İnceleyen: Teknik Analiz Ekibi
+
+1. Genel Bakış
+ilangoster.com, emlak profesyonelleri arasında güvenli portföy fotoğrafı paylaşımını hedefleyen bir web platformudur. Platform, emlakçıların mülk fotoğraflarını, üzerine kırılmaz filigran ekleyerek ve belirli bir süre sonra otomatik silinerek paylaşmalarını sağlar. Bu sayede, izinsiz ilan paylaşımı ve müşterilerin aracıyı atlayarak doğrudan iletişime geçme riski azaltılmaya çalışılmaktadır.
+
+Temel Teknoloji: PHP ve MySQL kullanılarak geliştirilmiştir. Ön yüzde Tailwind CSS framework'ü ve vanilla JavaScript tercih edilmiştir.
+
+2. Teknik Altyapı ve Kod Analizi
+2.1. Ön Yüz (Frontend)
+Framework ve Stil: Tasarım, responsive (duyarlı) yapıda olup Tailwind CSS (v2.2.19) CDN üzerinden yüklenmektedir. Mobil cihazlara özel bir indirme banner'ı bulunmaktadır.
+
+JavaScript Kullanımı:
+
+Form Validasyonu: Telefon numarası girişi sırasında pattern="(0?5[0-9]{9})" ile basit bir validasyon yapılmaktadır.
+
+Limit Kontrolü: Kullanıcı telefon numarasını girdiğinde, fetch API ile sunucuya asenkron bir istek (action=check_limit) gönderilerek kullanım limiti kontrol edilmektedir. Bu iyi bir kullanıcı deneyimi sunar.
+
+Yükleme Simülasyonu: Dosya yükleme formu gönderildiğinde, kullanıcıya görsel geri bildirim vermek için bir yükleme overlay'i ve ilerleme çubuğu gösterilmektedir. Ancak, bu ilerleme çubuğu gerçek yükleme durumunu değil, simüle edilmiş bir artışı göstermektedir.
+
+2.2. Arka Yüz (Backend) ve Güvenlik
+Dosya Yükleme: Yükleme işlemi upload.php sayfasına POST metodu ile yapılmaktadır. Doğrudan GET ile erişimde "Geçersiz istek metodu" uyarısı alınmaktadır, bu da temel bir güvenlik önlemi olduğunu gösterir.
+
+Filigran Teknolojisi: Görsellere, "Imagick teknolojisi ile 45 derece açıyla ve şeffaflıkla" filigran eklenmektedir. Bu, ekran görüntüsü almayı zorlaştırmayı amaçlamaktadır.
+
+Oturum ve Ödeme: Kullanıcı girişi için login.php sayfası bulunmaktadır. Ödeme işlemleri (payment/pay.php) için kullanıcının giriş yapmış olması gerekmektedir.
+
+Veritabanı: Kullanıcı hesapları, yükleme limitleri ve paylaşım link'lerini yönetmek için MySQL kullanıldığı belirtilmiştir.
+
+2.3. Eksiklikler ve Riskler
+Kaynak Kodu Görünürlüğü: upload.php ve login.php gibi kritik backend dosyalarının kaynak kodları sunucu tarafından işlendiği için görüntülenememektedir. Bu, SQL enjeksiyonu, XSS (Cross-Site Scripting) ve dosya yükleme güvenliği gibi konularda detaylı bir güvenlik denetimi yapmayı engellemektedir.
+
+Güvenlik Açıkları (Potansiyel):
+
+SQL Enjeksiyonu: Telefon numarası gibi kullanıcı girdilerinin veritabanı sorgularında nasıl kullanıldığı görülemiyor. Hazırlanmış ifadeler (prepared statements) kullanılmıyor olabilir.
+
+Dosya Yükleme Güvenliği: Yalnızca accept="image/jpeg, image/png, image/webp" istemci tarafında sınırlama getirmektedir. Sunucu tarafında dosya türü (MIME type), uzantısı ve içeriği kontrol edilip edilmediği bilinmemektedir. Kötü niyetli dosya yükleme riski vardır.
+
+Şifre Güvenliği: Kullanıcı şifrelerinin nasıl saklandığı (örn., bcrypt hash) görülemiyor.
+
+Oturum Yönetimi: Oturum token'larının nasıl oluşturulduğu ve yönetildiği bilinmiyor.
+
+Hata Yönetimi: upload.php ve pay.php sayfalarında "Geçersiz istek metodu" veya "Geçersiz paket seçimi" gibi hata mesajları, iç yapı hakkında fazla bilgi vermese de kullanıcı deneyimini olumsuz etkileyebilir.
+
+3. Performans Analizi
+Hız: Tailwind CSS gibi büyük bir framework'ün CDN'den yüklenmesi, ilk sayfa yükleme süresini etkileyebilir.
+
+Resim Optimizasyonu: Kullanıcılar tarafından yüklenen resimlerin sunucu tarafında boyutlandırılıp optimize edilip edilmediği (örneğin WebP'ye dönüştürme) bilinmemektedir. Optimize edilmezse, bant genişliği kullanımı ve sayfa yükleme hızları olumsuz etkilenebilir.
+
+Ölçeklenebilirlik: Yüksek trafik durumunda, dosya yükleme ve filigran ekleme işlemlerinin performansı Imagick ve sunucu kaynaklarına bağlı olarak düşebilir.
+
+4. SEO (Arama Motoru Optimizasyonu) Değerlendirmesi
+Olumlu Yönler:
+
+Başlık ve Açıklama: <title> etiketi "ilangoster: Güvenli Portföy Resim Paylaşım Platformu" şeklindedir ve konuyu net açıklar. Open Graph (OG) meta etiketleri bulunmaktadır.
+
+Mobil Uyumluluk: viewport meta etiketi ve responsive tasarım sayesinde mobil cihazlarla uyumludur.
+
+SSL Sertifikası: Site HTTPS protokolü üzerinden hizmet vermektedir.
+
+Eksiklikler ve İyileştirme Alanları:
+
+SEO Dostu URL'ler (URL Yapısı): URL'ler index.php, login.php, upload.php gibi dosya uzantıları içermektedir. /giris, /yukle gibi anlamlı ve temiz URL'ler SEO için daha iyidir.
+
+Meta Açıklama (Description): OG açıklaması ("Portföy resimlerinizi güvenle paylaşın.") yeterince açıklayıcı ve uzun değildir. Hedef anahtar kelimeleri içeren, daha kapsamlı bir meta açıklaması eklenmelidir.
+
+Başlık (H1) Kullanımı: Ana sayfada "Güvenli Resim Paylaşma Platformu" başlığı <h1> etiketi içinde kullanılmıştır. Bu iyi bir uygulamadır.
+
+Site Haritası ve Robots.txt: robots.txt dosyası bulunmamaktadır. Arama motoru tarayıcılarını yönlendirmek ve indekslemeyi kontrol etmek için bir robots.txt dosyası ve bir XML site haritası oluşturulmalıdır.
+
+İçerik: Site, tamamen işlevsel bir forma odaklanmıştır. Emlakçıların sorunlarına çözüm sunan blog yazıları veya açıklayıcı sayfalar gibi organik arama trafiği çekecek metin tabanlı içerikler oldukça sınırlıdır.
+
+5. Öneriler
+5.1. Güvenlik
+SQL Enjeksiyonu: Tüm veritabanı sorgularında PDO veya MySQLi ile hazırlanmış ifadeler (prepared statements) kullanıldığından emin olun.
+
+XSS (Cross-Site Scripting): Kullanıcıdan alınan ve HTML çıktısında görüntülenen tüm veriler için htmlspecialchars() fonksiyonu gibi çıktı temizleme yöntemleri uygulayın.
+
+Dosya Yükleme Güvenliği:
+
+Dosya adındaki özel karakterleri temizleyin.
+
+Dosya türünü sadece uzantıya değil, finfo_file() gibi fonksiyonlarla MIME type'ına göre de kontrol edin.
+
+Yüklenen dosyaları web kök dizini dışında bir klasörde saklayın ve erişimi PHP scriptleri üzerinden sağlayın.
+
+Dosya boyutu sınırlaması getirin.
+
+Şifre Güvenliği: Kullanıcı şifrelerini bcrypt gibi güçlü bir hash algoritmasıyla hashleyin. Asla düz metin olarak saklamayın.
+
+HTTPS Zorunluluğu: Tüm trafiği HTTPS'ye yönlendirin ve HTTP Strict Transport Security (HSTS) başlığını eklemeyi düşünün.
+
+5.2. Performans
+Resim Optimizasyonu: Yüklenen resimleri otomatik olarak boyutlandırmak ve modern formatlara (WebP) dönüştürmek için bir kütüphane (örn., Intervention Image) kullanın.
+
+Önbellekleme (Caching): CSS, JS ve resimler için tarayıcı önbellekleme başlıklarını ayarlayın. PHP opcode önbelleği (OPcache) sunucuda etkinleştirilmelidir.
+
+CDN Kullanımı: Yüklenen resimleri dağıtmak için bir Content Delivery Network (CDN) kullanmayı değerlendirin.
+
+5.3. SEO
+URL Yapısı: mod_rewrite (Apache) veya Nginx kuralları kullanarak SEO dostu URL'ler oluşturun (Örn: ilangoster.com/giris).
+
+Meta Açıklama: Ana sayfa ve diğer sayfalar için, 150-160 karakter uzunluğunda, hedef kitlenin arama sorgularını içeren etkileyici meta açıklamalar yazın.
+
+Site Haritası: Tüm kamuya açık sayfaları listeleyen bir sitemap.xml dosyası oluşturun ve Google Search Console'a ekleyin.
+
+Robots.txt: Arama motoru tarayıcılarını yönlendirmek için bir robots.txt dosyası oluşturun.
+
+İçerik Geliştirme: "Emlakçılar için Güvenli Fotoğraf Paylaşım Rehberi" gibi bilgilendirici blog yazıları ekleyerek organik trafiği artırın.
+
+5.4. İşlevsellik ve Kullanıcı Deneyimi
+Gerçek Yükleme İlerlemesi: Mevcut simüle edilmiş ilerleme çubuğu yerine, gerçek dosya yükleme ilerlemesini gösteren bir sistem uygulayın.
+
+Filigran Özelleştirme: Kullanıcıların filigran yoğunluğunu veya metnini (örneğin, kendi telefon numarasını) özelleştirmesine izin veren seçenekler sunmayı düşünün.
+
+Panel Geliştirmesi: Kullanıcıların geçmiş yüklemelerini görebileceği, sürelerini uzatabileceği veya silebileceği daha kapsamlı bir kullanıcı paneli oluşturun.
+
+API Desteği: Diğem emlak platformları veya CRM sistemleri ile entegrasyon için basit bir API sunmayı düşünün.
+
+6. Sonuç
+ilangoster.com, emlak sektöründeki belirli bir güvenlik ihtiyacını hedefleyen işlevsel ve iyi tasarlanmış bir platformdur. Temel işlevler (yükleme, filigran, süreli paylaşım) kullanıcıya sunulmaktadır. Ancak, özellikle güvenlik (SQLi, dosya yükleme) ve SEO (URL yapısı, içerik) alanlarında önemli iyileştirmelere ihtiyaç duymaktadır. Yukarıdaki önerilerin uygulanması, platformun güvenliğini, performansını, arama motoru görünürlüğünü ve genel kullanıcı deneyimini önemli ölçüde artıracaktır.

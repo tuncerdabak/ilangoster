@@ -67,8 +67,12 @@ unset($_SESSION['message']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ilangoster: Güvenli Portföy Resim Paylaşım Platformu</title>
+    <meta name="description"
+        content="Emlakçılar için güvenli portföy resim paylaşım platformu. Resimlerinize kırılmaz filigran ekleyin ve 24 saat sonra otomatik silinen linklerle güvenle paylaşın.">
+    <meta name="keywords" content="emlak, portföy paylaşımı, güvenli ilan, filigran, watermark, emlakçı araçları">
+    <meta property="og:title" content="ilangoster: Güvenli Portföy Resim Paylaşımı">
     <meta property="og:image" content="<?= SITE_URL ?>/logo.png">
-    <meta property="og:description" content="Portföy resimlerinizi güvenle paylaşın.">
+    <meta property="og:description" content="Portföy resimlerinizi filigran ekleyerek güvenle paylaşın.">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         body {

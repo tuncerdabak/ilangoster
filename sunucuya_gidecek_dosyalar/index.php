@@ -6,6 +6,9 @@ session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'check_limit') {
     header('Content-Type: application/json');
     $phone = preg_replace('/[^0-9]/', '', $_POST['phone'] ?? '');
+    if (str_starts_with($phone, '0')) {
+        $phone = substr($phone, 1);
+    }
 
     if (strlen($phone) !== 10) {
         echo json_encode(['status' => 'error', 'message' => 'Geçersiz telefon numarası.']);
@@ -292,8 +295,8 @@ unset($_SESSION['message']);
                             value="<?php echo isset($_SESSION['user_phone']) ? htmlspecialchars($_SESSION['user_phone']) : (isset($_SESSION['admin_phone']) ? htmlspecialchars($_SESSION['admin_phone']) : ''); ?>"
                             <?php echo (isset($_SESSION['user_phone']) || isset($_SESSION['admin_phone'])) ? 'readonly' : ''; ?>
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 <?php echo (isset($_SESSION['user_phone']) || isset($_SESSION['admin_phone'])) ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : ''; ?>"
-                            placeholder="5xxxxxxxxx" required pattern="5[0-9]{9}"
-                            title="10 haneli telefon numaranızı giriniz (örn: 5xxxxxxxxx)">
+                            placeholder="05XXXXXXXXX" required pattern="(0?5[0-9]{9})"
+                            title="Telefon numaranızı giriniz (örn: 05xxxxxxxxx)">
                     </div>
 
                     <!-- Fotoğraflar -->
@@ -492,7 +495,8 @@ unset($_SESSION['message']);
         const alertMsg = document.getElementById('limit-message');
 
         phoneInput.addEventListener('keyup', function () {
-            const phone = this.value.replace(/[^0-9]/g, '');
+            let phone = this.value.replace(/[^0-9]/g, '');
+            if (phone.startsWith('0')) { phone = phone.substring(1); }
 
             if (phone.length === 10) {
                 // Limit kontrol isteği

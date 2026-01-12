@@ -23,6 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = trim($_POST['phone'] ?? '');
     $password = $_POST['password'] ?? '';
     $phone_clean = preg_replace('/[^0-9]/', '', $phone);
+    if (str_starts_with($phone_clean, '0')) {
+        $phone_clean = substr($phone_clean, 1);
+    }
 
     if (empty($phone_clean) || empty($password)) {
         $error_msg = "Lütfen telefon ve şifre giriniz.";
@@ -163,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">📞</span>
                     <input type="tel" name="phone" id="phone" value="<?= htmlspecialchars($phone ?? '') ?>" required
-                        placeholder="5XXXXXXXXX"
+                        placeholder="05XXXXXXXXX"
                         class="pl-10 w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition shadow-sm">
                 </div>
             </div>

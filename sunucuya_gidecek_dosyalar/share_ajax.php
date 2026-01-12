@@ -36,6 +36,9 @@ if (!$gallery) {
 // 2. Müşteri Telefonunu Kaydet/Güncelle
 // Sadece temizlenmiş numara
 $customer_phone = preg_replace('/[^0-9]/', '', $customer_phone);
+if (str_starts_with($customer_phone, '0')) {
+    $customer_phone = substr($customer_phone, 1);
+}
 
 if (strlen($customer_phone) != 10) {
     echo json_encode(['status' => 'error', 'message' => 'Telefon numarası 10 haneli olmalıdır.']);

@@ -81,6 +81,24 @@ $total_photos_used = $stmt_photo_usage->fetchColumn() ?: 0;
                 display: none;
             }
         }
+
+        @keyframes pulse-gold {
+            0% {
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+            }
+        }
+
+        .animate-pulse-gold {
+            animation: pulse-gold 2s infinite;
+        }
     </style>
 </head>
 
@@ -127,14 +145,12 @@ $total_photos_used = $stmt_photo_usage->fetchColumn() ?: 0;
                                 <?= ($package_key == 'free') ? 'Kısıtlı Ücretsiz' : $package_info['name_tr'] ?>
                             </dd>
                         </div>
-                        <?php if ($package_key == 'free' || $is_expired): ?>
-                            <div class="mt-4">
-                                <a href="index.php#packages"
-                                    class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-bold rounded-xl text-white bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 shadow-lg transform transition hover:-translate-y-0.5 active:scale-95">
-                                    ⭐ PAKET YÜKSELT
-                                </a>
-                            </div>
-                        <?php endif; ?>
+                        <div class="mt-4">
+                            <a href="index.php#packages"
+                                class="w-full inline-flex justify-center items-center px-4 py-3 border border-transparent text-sm font-black rounded-xl text-white bg-gradient-to-r from-orange-500 via-yellow-500 to-orange-500 bg-[length:200%_auto] hover:bg-right transition-all duration-500 shadow-xl transform hover:-translate-y-1 active:scale-95 animate-pulse-gold uppercase tracking-tighter">
+                                ⭐ PAKETİNİ YÜKSELT & AYRICALIK KAZAN
+                            </a>
+                        </div>
                     </div>
 
                     <div class="bg-white p-5 rounded-2xl shadow-sm border border-indigo-100">
@@ -326,7 +342,7 @@ $total_photos_used = $stmt_photo_usage->fetchColumn() ?: 0;
                     <div class="mb-3">
                         <label class="block text-[10px] font-bold text-gray-400 uppercase mb-1 ml-1">Müşteri
                             Numarası</label>
-                        <input type="tel" id="modalCustomerPhone" placeholder="5XXXXXXXXX" maxlength="10"
+                        <input type="tel" id="modalCustomerPhone" placeholder="05XXXXXXXXX" maxlength="11"
                             class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-green-500 focus:border-green-500 text-sm font-bold">
                     </div>
 
@@ -374,7 +390,8 @@ $total_photos_used = $stmt_photo_usage->fetchColumn() ?: 0;
         function submitShare(isQuick) {
             const id = modalGalleryId.value;
             const token = modalUniqueToken.value;
-            const phone = modalPhone.value;
+            let phone = modalPhone.value.replace(/[^0-9]/g, '');
+            if (phone.startsWith('0')) { phone = phone.substring(1); }
             const btn = isQuick ? document.getElementById('btnQuickShare') : document.getElementById('btnShareSubmit');
 
             if (isQuick) {

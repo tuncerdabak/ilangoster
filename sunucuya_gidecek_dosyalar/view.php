@@ -34,6 +34,9 @@ $error_msg = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['viewer_phone'])) {
     $phone = preg_replace('/[^0-9]/', '', $_POST['viewer_phone']);
+    if (str_starts_with($phone, '0')) {
+        $phone = substr($phone, 1);
+    }
 
     // Validasyon
     if (strlen($phone) !== 10 || substr($phone, 0, 1) !== '5') {
@@ -82,7 +85,7 @@ if (!isset($_SESSION[$session_key])) {
             <form method="POST" class="space-y-4">
                 <div>
                     <label class="block text-left text-sm font-medium text-gray-700 mb-1">Cep Telefonu</label>
-                    <input type="tel" name="viewer_phone" required placeholder="5XXXXXXXXX" maxlength="10"
+                    <input type="tel" name="viewer_phone" required placeholder="05XXXXXXXXX" maxlength="11"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition">
                     <p class="text-xs text-gray-400 mt-1 text-left">Başında 0 olmadan giriniz.</p>
                 </div>

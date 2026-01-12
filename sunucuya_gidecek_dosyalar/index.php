@@ -350,13 +350,11 @@ unset($_SESSION['message']);
                         otomatik silinir. Fotoğraf hırsızlığına son verir.</p>
                 </div>
 
-                <!-- Kart 3: Tekrarlayan Filigran -->
+                <!-- Kart 3: Üst Düzey Koruma -->
                 <div class="feature-card p-6 rounded-xl bg-gray-50 border border-gray-100 shadow-md">
                     <span class="text-4xl mb-4 inline-block">🖼️</span>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Kırılmaz Filigran Teknolojisi</h3>
-                    <p class="text-gray-600">Imagick teknolojisi ile 45 derece açıyla ve şeffaflıkla eklenen filigran,
-                        ekran
-                        görüntüsü alınmasını zorlaştırmış oluruz.</p>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Üst Düzey Filigran Koruması</h3>
+                    <p class="text-gray-600">Gelişmiş Imagick teknolojisi ile eklenen filigranlar, görsellerinizin izinsiz kullanımını engellemek için en üst düzeyde koruma sağlar.</p>
                 </div>
             </div>
         </div>

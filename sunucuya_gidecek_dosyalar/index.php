@@ -354,7 +354,8 @@ unset($_SESSION['message']);
                 <div class="feature-card p-6 rounded-xl bg-gray-50 border border-gray-100 shadow-md">
                     <span class="text-4xl mb-4 inline-block">🖼️</span>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Üst Düzey Filigran Koruması</h3>
-                    <p class="text-gray-600">Gelişmiş Imagick teknolojisi ile eklenen filigranlar, görsellerinizin izinsiz kullanımını engellemek için en üst düzeyde koruma sağlar.</p>
+                    <p class="text-gray-600">Gelişmiş Imagick teknolojisi ile eklenen filigranlar, görsellerinizin
+                        izinsiz kullanımını engellemek için en üst düzeyde koruma sağlar.</p>
                 </div>
             </div>
         </div>
@@ -377,7 +378,7 @@ unset($_SESSION['message']);
                     <div class="bg-gray-100 rounded-lg p-4 mb-6 text-center">
                         <span class="block text-xs text-gray-500 uppercase font-bold">Paket Kullanım Süresi</span>
                         <span
-                            class="block text-2xl font-black text-gray-800"><?= $GLOBALS['PACKAGES']['free']['duration_days'] ?>
+                            class="block text-2xl font-black text-gray-800"><?= $GLOBALS['PACKAGES']['free']['duration_days'] * 24 ?>
                             SAAT</span>
                     </div>
 
@@ -415,9 +416,11 @@ unset($_SESSION['message']);
                     </div>
 
                     <ul class="space-y-4 mb-8 text-left text-gray-600 flex-1">
-                        <li class="flex items-start"><span class="text-indigo-500 mr-2">✔</span> <strong>10
+                        <li class="flex items-start"><span class="text-indigo-500 mr-2">✔</span>
+                            <strong><?= $GLOBALS['PACKAGES']['standard']['gallery_limit'] ?>
                                 Adet</strong> İlan Hakkı</li>
-                        <li class="flex items-start"><span class="text-indigo-500 mr-2">✔</span> <strong>100
+                        <li class="flex items-start"><span class="text-indigo-500 mr-2">✔</span>
+                            <strong><?= $GLOBALS['PACKAGES']['standard']['photo_limit'] ?>
                                 Fotoğraf</strong>/İlan</li>
                         <li class="flex items-start"><span class="text-indigo-500 mr-2">✔</span> Panel Erişimi
                         </li>
@@ -456,11 +459,11 @@ unset($_SESSION['message']);
                     <ul class="space-y-4 mb-8 text-left text-gray-700 flex-1">
                         <li class="flex items-start"><span
                                 class="bg-yellow-400 text-white rounded-full p-1 mr-2 text-xs flex-shrink-0">✔</span>
-                            <strong>50 Adet</strong> İlan Hakkı
+                            <strong><?= $GLOBALS['PACKAGES']['premium']['gallery_limit'] ?> Adet</strong> İlan Hakkı
                         </li>
                         <li class="flex items-start"><span
                                 class="bg-yellow-400 text-white rounded-full p-1 mr-2 text-xs flex-shrink-0">✔</span>
-                            <strong>500 Fotoğraf</strong>/İlan
+                            <strong><?= $GLOBALS['PACKAGES']['premium']['photo_limit'] ?> Fotoğraf</strong>/İlan
                         </li>
                         <li class="flex items-start"><span
                                 class="bg-yellow-400 text-white rounded-full p-1 mr-2 text-xs flex-shrink-0">✔</span>

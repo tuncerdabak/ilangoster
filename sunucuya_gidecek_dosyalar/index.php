@@ -206,7 +206,23 @@ unset($_SESSION['message']);
         </div>
     </div>
 
+    <!-- Mobile App Download Banner (Show only on Mobile) -->
+    <div class="md:hidden bg-indigo-600 text-white px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="bg-white p-1 rounded-lg">
+                <img src="logo.png" alt="App" class="h-8 w-auto">
+            </div>
+            <div>
+                <p class="text-xs font-bold leading-tight">İlan Göster Android Uygulaması</p>
+                <p class="text-[10px] opacity-80">Hemen indir, ilanlarını cebinden yönet!</p>
+            </div>
+        </div>
+        <a href="indir.php"
+            class="bg-yellow-400 text-indigo-900 text-xs font-black px-4 py-2 rounded-full shadow-lg">İNDİR</a>
+    </div>
+
     <!-- Header / Navbar -->
+
     <header class="bg-white shadow-md">
         <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
             <a href="index.php" class="flex items-center gap-2 group">

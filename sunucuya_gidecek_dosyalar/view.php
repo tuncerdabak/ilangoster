@@ -135,12 +135,23 @@ $minutes = floor(($remaining_time % 3600) / 60);
                         class="text-green-400">goster.com</span></span>
             </a>
 
-            <?php if (isset($hours) && isset($minutes)): ?>
-                <div class="text-xs md:text-sm text-gray-300 bg-gray-700 px-3 py-1 rounded-full flex items-center gap-2">
-                    <span>⏱️ Kalan Süre:</span>
-                    <span class="font-mono text-white font-bold"><?= $hours ?>sa <?= $minutes ?>dk</span>
-                </div>
-            <?php endif; ?>
+            <div class="flex items-center gap-4">
+                <a href="https://ilangoster.com"
+                    class="flex items-center gap-2 bg-gray-700 hover:bg-gray-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Geri Dön
+                </a>
+                <?php if (isset($hours) && isset($minutes)): ?>
+                    <div
+                        class="text-[10px] md:text-sm text-gray-300 bg-gray-700 px-3 py-1.5 rounded-lg flex items-center gap-2">
+                        <span class="hidden sm:inline">⏱️ Kalan Süre:</span>
+                        <span class="font-mono text-white font-bold"><?= $hours ?>sa <?= $minutes ?>dk</span>
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
     </nav>
 

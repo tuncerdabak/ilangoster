@@ -118,36 +118,89 @@ $total_photos_used = $stmt_photo_usage->fetchColumn() ?: 0;
             <div class="px-4 py-5 sm:p-6">
                 <h3 class="text-lg leading-6 font-medium text-gray-900">Mevcut Üyelik Durumu</h3>
                 <div class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-5">
-                    <div class="bg-indigo-50 p-4 rounded-lg">
-                        <dt class="text-sm font-medium text-indigo-500 truncate">Paket Tipi</dt>
-                        <dd class="mt-1 text-2xl font-semibold text-indigo-900"><?= $package_info['name_tr'] ?></dd>
+                    <div
+                        class="bg-white p-5 rounded-2xl shadow-sm border border-indigo-100 flex flex-col justify-between">
+                        <div>
+                            <dt class="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-1">Mevcut Paket
+                            </dt>
+                            <dd class="text-2xl font-black text-indigo-900">
+                                <?= ($package_key == 'free') ? 'Kısıtlı Ücretsiz' : $package_info['name_tr'] ?>
+                            </dd>
+                        </div>
+                        <?php if ($package_key == 'free' || $is_expired): ?>
+                            <div class="mt-4">
+                                <a href="index.php#packages"
+                                    class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-bold rounded-xl text-white bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 shadow-lg transform transition hover:-translate-y-0.5 active:scale-95">
+                                    ⭐ PAKET YÜKSELT
+                                </a>
+                            </div>
+                        <?php endif; ?>
                     </div>
-                    <div class="bg-indigo-50 p-4 rounded-lg">
-                        <dt class="text-sm font-medium text-indigo-500 truncate">Kalan Haklar</dt>
-                        <dd class="mt-1 text-sm text-indigo-900">
-                            Galeri Limiti: <strong><?= $package_info['gallery_limit'] ?></strong> (<?= $gallery_count ?>
-                            kullanıldı)
-                            <br>
-                            Foto Limiti: <strong><?= $package_info['photo_limit'] ?></strong> (<?= $total_photos_used ?>
-                            kullanıldı)
-                        </dd>
+
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-indigo-100">
+                        <dt class="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-4">Kullanım Hakları
+                        </dt>
+
+                        <!-- Galeri Limiti -->
+                        <div class="mb-4">
+                            <div class="flex justify-between items-end mb-1">
+                                <span class="text-sm font-bold text-gray-700">İlan (Galeri)</span>
+                                <span class="text-xs font-medium text-gray-500"><?= $gallery_count ?> /
+                                    <?= $package_info['gallery_limit'] ?></span>
+                            </div>
+                            <?php $gallery_pct = min(100, ($gallery_count / $package_info['gallery_limit']) * 100); ?>
+                            <div class="w-full bg-gray-100 rounded-full h-2">
+                                <div class="bg-indigo-600 h-2 rounded-full transition-all duration-500"
+                                    style="width: <?= $gallery_pct ?>%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Foto Limiti -->
+                        <div>
+                            <div class="flex justify-between items-end mb-1">
+                                <span class="text-sm font-bold text-gray-700">Fotoğraf</span>
+                                <span class="text-xs font-medium text-gray-500"><?= $total_photos_used ?> /
+                                    <?= $package_info['photo_limit'] ?></span>
+                            </div>
+                            <?php $photo_pct = min(100, ($total_photos_used / $package_info['photo_limit']) * 100); ?>
+                            <div class="w-full bg-gray-100 rounded-full h-2">
+                                <div class="bg-green-500 h-2 rounded-full transition-all duration-500"
+                                    style="width: <?= $photo_pct ?>%"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="bg-indigo-50 p-4 rounded-lg">
-                        <dt class="text-sm font-medium text-indigo-500 truncate">Geçerlilik Tarihi</dt>
-                        <dd class="mt-1 text-xl font-semibold text-indigo-900">
+
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-indigo-100">
+                        <dt class="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-1">Geçerlilik Tarihi
+                        </dt>
+                        <dd class="mt-1">
                             <?php if ($package_key == 'free'): ?>
-                                <span class="text-gray-500">Süresiz (Ücretsiz)</span>
+                                <span class="text-sm font-bold text-gray-400">SÜRESİZ</span>
+                                <p class="text-[10px] text-gray-400 mt-1 uppercase">Kısıtlı Ücretsiz Mod</p>
                             <?php else: ?>
-                                <?= date('d.m.Y', strtotime($user['active_until'])) ?>
-                                <?php if ($is_expired): ?> <span class="text-red-600 text-sm">(Süresi Dolmuş)</span>
+                                <span
+                                    class="text-xl font-black text-indigo-900"><?= date('d.m.Y', strtotime($user['active_until'])) ?></span>
+                                <?php if ($is_expired): ?>
+                                    <div class="mt-1 flex items-center gap-1 text-red-600">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                                clip-rule="evenodd"></path>
+                                        </svg>
+                                        <span class="text-xs font-bold uppercase">Süresi Dolmuş</span>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="mt-1 flex items-center gap-1 text-green-600">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                clip-rule="evenodd"></path>
+                                        </svg>
+                                        <span class="text-xs font-bold uppercase">Aktif</span>
+                                    </div>
                                 <?php endif; ?>
                             <?php endif; ?>
                         </dd>
-                        <?php if ($package_key == 'free' || $is_expired): ?>
-                            <a href="index.php#packages"
-                                class="mt-2 inline-block text-xs font-bold text-indigo-600 hover:text-indigo-800">Paket
-                                Yükselt &rarr;</a>
-                        <?php endif; ?>
                     </div>
                 </div>
             </div>

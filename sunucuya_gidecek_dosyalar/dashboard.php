@@ -143,9 +143,11 @@ $total_photos_used = $stmt_photo_usage->fetchColumn() ?: 0;
                             <div class="flex justify-between items-start">
                                 <dt class="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-1">Mevcut Paket
                                 </dt>
-                                <a href="profile_settings.php"
-                                    class="text-[10px] bg-indigo-50 text-indigo-600 px-2 py-1 rounded-md hover:bg-indigo-100">Profil
-                                    & Logo</a>
+                                <?php if ($package_key === 'premium'): ?>
+                                    <a href="profile_settings.php"
+                                        class="text-[10px] bg-indigo-50 text-indigo-600 px-2 py-1 rounded-md hover:bg-indigo-100">Profil
+                                        & Logo</a>
+                                <?php endif; ?>
                             </div>
                             </dt>
                             <dd class="text-2xl font-black text-indigo-900">

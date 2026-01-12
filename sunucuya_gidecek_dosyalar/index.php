@@ -372,7 +372,7 @@ unset($_SESSION['message']);
                 <div
                     class="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 flex flex-col relative overflow-hidden transition transform hover:-translate-y-1 hover:shadow-2xl">
                     <h3 class="text-xl font-bold text-gray-400 uppercase tracking-wide mb-2">Başlangıç</h3>
-                    <div class="text-5xl font-extrabold text-gray-900 mb-2">Ücretsiz</div>
+                    <div class="text-4xl font-extrabold text-gray-900 mb-2">Kısıtlı Ücretsiz</div>
                     <p class="text-gray-500 mb-6">Hızlı ve anlık paylaşımlar için ideal.</p>
 
                     <div class="bg-gray-100 rounded-lg p-4 mb-6 text-center">
@@ -388,6 +388,8 @@ unset($_SESSION['message']);
                         <li class="flex items-start"><span class="text-green-500 mr-2">✔</span>
                             <?= $GLOBALS['PACKAGES']['free']['photo_limit'] ?> Fotoğraf / Portföy</li>
                         <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Güvenli Filigran</li>
+                        <li class="flex items-start text-gray-400 opacity-50"><span class="mr-2">✘</span> Profil & Logo
+                        </li>
                         <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> WhatsApp Desteği</li>
                     </ul>
 
@@ -427,6 +429,8 @@ unset($_SESSION['message']);
                         <li class="flex items-start"><span class="text-indigo-500 mr-2">✔</span> Panel Erişimi
                         </li>
                         <li class="flex items-start"><span class="text-indigo-500 mr-2">✔</span> Güvenli Filigran</li>
+                        <li class="flex items-start text-gray-400 opacity-50"><span class="mr-2">✘</span> Profil & Logo
+                        </li>
                         <li class="flex items-start"><span class="text-indigo-500 mr-2">✔</span> WhatsApp Desteği</li>
                     </ul>
 
@@ -494,10 +498,12 @@ unset($_SESSION['message']);
                 <!-- Marka ve Hakkımızda -->
                 <div class="text-left">
                     <div class="flex items-center mb-6">
-                        <span class="text-2xl font-black text-white tracking-tighter">İlan<span class="text-indigo-500">Göster</span></span>
+                        <span class="text-2xl font-black text-white tracking-tighter">İlan<span
+                                class="text-indigo-500">Göster</span></span>
                     </div>
                     <p class="text-sm leading-relaxed opacity-70">
-                        Emlak profesyonelleri için geliştirilen, güvenli ve hızlı portföy paylaşım platformu. Resimlerinizi korur, hızınızı artırır.
+                        Emlak profesyonelleri için geliştirilen, güvenli ve hızlı portföy paylaşım platformu.
+                        Resimlerinizi korur, hızınızı artırır.
                     </p>
                 </div>
 
@@ -515,13 +521,15 @@ unset($_SESSION['message']);
                 <div class="md:text-right">
                     <h4 class="text-white font-bold mb-6 uppercase tracking-widest text-xs">Destek & İletişim</h4>
                     <p class="text-sm mb-2 opacity-80">Herhangi bir sorunuz mu var?</p>
-                    <a href="tel:05423408943" class="text-xl font-black text-indigo-400 hover:text-indigo-300 transition">0542 340 89 43</a>
+                    <a href="tel:05423408943"
+                        class="text-xl font-black text-indigo-400 hover:text-indigo-300 transition">0542 340 89 43</a>
                     <p class="text-xs mt-4 opacity-50 italic">Hafta içi 09:00 - 18:00 destek verilmektedir.</p>
                 </div>
             </div>
 
             <!-- Alt Bilgi (Mobile Safe Area) -->
-            <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs opacity-50 pb-[env(safe-area-inset-bottom)] sm:pb-8">
+            <div
+                class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs opacity-50 pb-[env(safe-area-inset-bottom)] sm:pb-8">
                 <p>&copy; <?php echo date('Y'); ?> ilangoster.com. Tüm hakları saklıdır.</p>
                 <div class="flex gap-6">
                     <span>Güvenli Resim Paylaşım Platformu</span>

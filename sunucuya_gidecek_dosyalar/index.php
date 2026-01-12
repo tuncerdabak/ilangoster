@@ -230,10 +230,10 @@ unset($_SESSION['message']);
                 <span class="text-2xl font-bold text-gray-800">ilan<span class="text-green-600">goster.com</span></span>
             </a>
             <nav class="space-x-4">
-                <a href="#packages" class="text-gray-600 hover:text-green-600 font-medium">Paketler</a>
+                <a href="#packages" class="text-gray-600 hover:text-green-600 font-medium">Fiyatlar</a>
                 <?php if (isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])): ?>
                     <a href="<?php echo isset($_SESSION['admin_id']) ? 'admin.php' : 'dashboard.php'; ?>"
-                        class="text-indigo-600 hover:text-indigo-800 font-medium">Panelim</a>
+                        class="text-indigo-600 hover:text-indigo-800 font-medium">İlanlarım</a>
                 <?php else: ?>
                     <a href="login.php" class="text-indigo-600 hover:text-indigo-800 font-medium">Giriş</a>
                 <?php endif; ?>
@@ -277,7 +277,7 @@ unset($_SESSION['message']);
                 <div id="limit-alert" class="hidden p-4 mb-4 rounded-lg text-sm message-error text-left">
                     <p id="limit-message" class="font-bold mb-2"></p>
                     <a href="#packages"
-                        class="inline-block bg-indigo-600 text-white text-xs font-bold py-2 px-4 rounded hover:bg-indigo-700">Paketleri
+                        class="inline-block bg-indigo-600 text-white text-xs font-bold py-2 px-4 rounded hover:bg-indigo-700">Fiyatları
                         İncele</a>
                 </div>
 

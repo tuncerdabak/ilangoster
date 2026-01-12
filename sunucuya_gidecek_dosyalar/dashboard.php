@@ -93,7 +93,7 @@ $total_photos_used = $stmt_photo_usage->fetchColumn() ?: 0;
                 <div class="flex items-center">
                     <a href="index.php" class="flex-shrink-0 flex items-center">
                         <img class="h-8 w-auto" src="logo.png" alt="İlanGöster">
-                        <span class="ml-2 font-bold text-gray-800">Panelim</span>
+                        <span class="ml-2 font-bold text-gray-800">İlanlarım</span>
                     </a>
                 </div>
                 <div class="flex items-center space-x-4">

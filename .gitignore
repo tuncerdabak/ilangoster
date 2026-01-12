@@ -1,0 +1,24 @@
+# Local environment files
+.vscode/
+
+# Project specific exclusions
+ftp_deploy_setup.md
+ilangoster.com.code-workspace
+Noter Belgesi.txt
+Reklam Görseli/
+Taslak/
+Whatsapp Tanıtım Mesajı.txt
+ilangoster.png
+ilangoster.com uygulaması/
+
+# PHP related exclusions
+error_log
+*.log
+
+# Git files
+.git/
+
+# OS generated files
+Thumbs.db
+Desktop.ini
+.DS_Store

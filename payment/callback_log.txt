@@ -1,0 +1,24 @@
+Array
+(
+    [platform_order_id] => 7_premium_1765285725
+    [status] => success
+    [installment] => 0
+    [payment_id] => 223933214
+    [random_nr] => 491997
+    [signature] => K1KN/duNc8W20Vf/kCMr3jsm94HuYQFpxh1fIbaFG1c=
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+    [platform_order_id] => 8_standard_1765288692
+    [status] => success
+    [installment] => 0
+    [payment_id] => 750971077
+    [random_nr] => 478062
+    [signature] => 1SHcnTEdbmh7J5gaYMVNSOwMVdUQ8bmMRD0IjWF+pd0=
+)

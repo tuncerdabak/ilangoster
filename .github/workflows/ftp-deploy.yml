@@ -1,0 +1,39 @@
+name: 🚀 FTP Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+    
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: ./ # Eğer FTP kullanıcısı direkt doğru klasöre login oluyorsa ./ kullanın.
+        exclude: | # Yüklenmesini İSTEMEDİĞİNİZ dosya/klasörler
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          .github/**
+          task.md
+          *.md
+          .vscode/**
+          sunucuya_gidecek_dosyalar/**
+          "ilangoster.com uygulaması"/**
+          "Reklam Görseli"/**
+          "Taslak"/**
+          "Noter Belgesi.txt"
+          "Whatsapp Tanıtım Mesajı.txt"
+          ilangoster.png
+          ilangoster.com.code-workspace
+          .gitignore

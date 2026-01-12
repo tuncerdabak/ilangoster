@@ -384,9 +384,9 @@ unset($_SESSION['message']);
 
                     <ul class="space-y-4 mb-8 text-left text-gray-600 flex-1">
                         <li class="flex items-start"><span class="text-green-500 mr-2">✔</span>
-                            <?= $GLOBALS['PACKAGES']['free']['gallery_limit'] ?> Adet İlan Hakkı</li>
+                            <?= $GLOBALS['PACKAGES']['free']['gallery_limit'] ?> Adet Portföy Hakkı</li>
                         <li class="flex items-start"><span class="text-green-500 mr-2">✔</span>
-                            <?= $GLOBALS['PACKAGES']['free']['photo_limit'] ?> Fotoğraf/İlan</li>
+                            <?= $GLOBALS['PACKAGES']['free']['photo_limit'] ?> Fotoğraf / Portföy</li>
                         <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> Güvenli Filigran</li>
                         <li class="flex items-start"><span class="text-green-500 mr-2">✔</span> WhatsApp Desteği</li>
                     </ul>
@@ -418,10 +418,12 @@ unset($_SESSION['message']);
                     <ul class="space-y-4 mb-8 text-left text-gray-600 flex-1">
                         <li class="flex items-start"><span class="text-indigo-500 mr-2">✔</span>
                             <strong><?= $GLOBALS['PACKAGES']['standard']['gallery_limit'] ?>
-                                Adet</strong> İlan Hakkı</li>
+                                Adet</strong> Portföy Hakkı
+                        </li>
                         <li class="flex items-start"><span class="text-indigo-500 mr-2">✔</span>
                             <strong><?= $GLOBALS['PACKAGES']['standard']['photo_limit'] ?>
-                                Fotoğraf</strong>/İlan</li>
+                                Fotoğraf</strong> / Portföy
+                        </li>
                         <li class="flex items-start"><span class="text-indigo-500 mr-2">✔</span> Panel Erişimi
                         </li>
                         <li class="flex items-start"><span class="text-indigo-500 mr-2">✔</span> Güvenli Filigran</li>
@@ -459,18 +461,18 @@ unset($_SESSION['message']);
                     <ul class="space-y-4 mb-8 text-left text-gray-700 flex-1">
                         <li class="flex items-start"><span
                                 class="bg-yellow-400 text-white rounded-full p-1 mr-2 text-xs flex-shrink-0">✔</span>
-                            <strong><?= $GLOBALS['PACKAGES']['premium']['gallery_limit'] ?> Adet</strong> İlan Hakkı
+                            <strong><?= $GLOBALS['PACKAGES']['premium']['gallery_limit'] ?> Adet</strong> Portföy Hakkı
                         </li>
                         <li class="flex items-start"><span
                                 class="bg-yellow-400 text-white rounded-full p-1 mr-2 text-xs flex-shrink-0">✔</span>
-                            <strong><?= $GLOBALS['PACKAGES']['premium']['photo_limit'] ?> Fotoğraf</strong>/İlan
+                            <strong><?= $GLOBALS['PACKAGES']['premium']['photo_limit'] ?> Fotoğraf</strong> / Portföy
                         </li>
                         <li class="flex items-start"><span
                                 class="bg-yellow-400 text-white rounded-full p-1 mr-2 text-xs flex-shrink-0">✔</span>
                             Panel Erişimi</li>
                         <li class="flex items-start"><span
                                 class="bg-yellow-400 text-white rounded-full p-1 mr-2 text-xs flex-shrink-0">✔</span>
-                            Güvenli Filigran</li>
+                            Özel Logolu Filigran</li>
                         <li class="flex items-start"><span
                                 class="bg-yellow-400 text-white rounded-full p-1 mr-2 text-xs flex-shrink-0">✔</span>
                             WhatsApp Desteği</li>

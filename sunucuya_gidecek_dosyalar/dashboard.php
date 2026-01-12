@@ -140,16 +140,20 @@ $total_photos_used = $stmt_photo_usage->fetchColumn() ?: 0;
                     <div
                         class="bg-white p-5 rounded-2xl shadow-sm border border-indigo-100 flex flex-col justify-between">
                         <div>
-                            <div class="flex justify-between items-start">
-                                <dt class="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-1">Mevcut Paket
-                                </dt>
+                            <div class="flex justify-between items-center mb-4">
+                                <dt class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Mevcut Paket</dt>
                                 <?php if ($package_key === 'premium'): ?>
                                     <a href="profile_settings.php"
-                                        class="text-[10px] bg-indigo-50 text-indigo-600 px-2 py-1 rounded-md hover:bg-indigo-100">Profil
-                                        & Logo</a>
+                                        class="text-[10px] bg-indigo-600 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition shadow-sm font-bold uppercase tracking-tighter">
+                                        ⭐ Profil & Logo
+                                    </a>
+                                <?php else: ?>
+                                    <span
+                                        class="text-[9px] bg-gray-100 text-gray-400 px-2 py-1 rounded-md border border-gray-200 uppercase font-black opacity-75">
+                                        🔒 Profil & Logo
+                                    </span>
                                 <?php endif; ?>
                             </div>
-                            </dt>
                             <dd class="text-2xl font-black text-indigo-900">
                                 <?= ($package_key == 'free') ? 'Kısıtlı Ücretsiz' : $package_info['name_tr'] ?>
                             </dd>

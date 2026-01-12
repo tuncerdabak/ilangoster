@@ -27,6 +27,7 @@ if (!$user) {
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Yeni İlan Yükle - Panelim</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
@@ -126,8 +127,8 @@ if (!$user) {
     <!-- Navbar -->
     <nav class="bg-white shadow">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex">
+            <div class="flex flex-col sm:flex-row justify-between items-center py-4 sm:h-16 gap-4 sm:gap-0">
+                <div class="flex items-center">
                     <a href="dashboard.php" class="flex-shrink-0 flex items-center">
                         <img class="h-8 w-auto" src="logo.png" alt="İlanGöster">
                         <span class="ml-2 font-bold text-gray-800">Panelim</span>

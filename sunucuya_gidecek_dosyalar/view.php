@@ -23,7 +23,7 @@ if (!$gallery || $gallery['is_expired'] || strtotime($gallery['expire_at']) < ti
         <h1 style='color: red; text-align: center; margin-top: 100px;'>
             🔐 Galeri Süresi Dolmuştur veya Geçersizdir.
             <br>
-            <span style='font-size: 16px; color: gray;'>İlan Sahibinden yeni bir link isteyiniz.</span>
+            <span style='font-size: 16px; color: gray;'>Portföy Sahibinden yeni bir link isteyiniz.</span>
         </h1>
     ");
 }
@@ -69,14 +69,14 @@ if (!isset($_SESSION[$session_key])) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>İlan Görüntüleme</title>
+        <title>Portföy Görüntüleme</title>
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     </head>
 
     <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
         <div class="bg-white p-8 rounded-xl shadow-2xl max-w-md w-full text-center">
             <h2 class="text-2xl font-bold mb-2 text-gray-800">Hoş Geldiniz</h2>
-            <p class="text-gray-600 mb-6">İlan resimlerini görüntülemek için lütfen cep telefonu numaranızı giriniz.</p>
+            <p class="text-gray-600 mb-6">Portföy resimlerini görüntülemek için lütfen cep telefonu numaranızı giriniz.</p>
 
             <?php if ($error_msg): ?>
                 <div class="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm"><?php echo $error_msg; ?></div>
@@ -91,10 +91,10 @@ if (!isset($_SESSION[$session_key])) {
                 </div>
                 <button type="submit"
                     class="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition">
-                    İlanı Görüntüle
+                    Portföyü Görüntüle
                 </button>
             </form>
-            <p class="text-xs text-gray-400 mt-6">Bu bilgi ilan sahibi ile paylaşılabilir.</p>
+            <p class="text-xs text-gray-400 mt-6">Bu bilgi portföy sahibi ile paylaşılabilir.</p>
         </div>
     </body>
 
@@ -119,10 +119,10 @@ $minutes = floor(($remaining_time % 3600) / 60);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İlan Görselleri - Güvenli Önizleme</title>
+    <title>Portföy Görselleri - Güvenli Önizleme</title>
     <meta name="robots" content="noindex, nofollow">
     <meta property="og:image" content="<?= SITE_URL ?>/logo.png">
-    <meta property="og:description" content="İlan görsellerini incelemek için tıklayın.">
+    <meta property="og:description" content="Portföy görsellerini incelemek için tıklayın.">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         /* Custom styles if any */
@@ -165,7 +165,7 @@ $minutes = floor(($remaining_time % 3600) / 60);
                 <div class="relative group">
                     <img src="<?php echo SITE_URL . '/' . htmlspecialchars($img['image_path']); ?>" loading="lazy"
                         class="w-full h-auto rounded-lg shadow-lg transform transition duration-500 hover:scale-[1.02]"
-                        alt="İlan Resmi">
+                        alt="Portföy Resmi">
 
                     <!-- Watermark Overlay (Optional visual reinforcement) -->
                     <div

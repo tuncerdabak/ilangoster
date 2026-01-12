@@ -488,10 +488,45 @@ unset($_SESSION['message']);
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white mt-auto">
-        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-sm">
-            <p>&copy; <?php echo date('Y'); ?> ilangoster.com - Tüm hakları saklıdır. | Güvenli Resim Paylaşım Platformu
-                | Teknik Destek için : 0542 340 89 43'i arayabilirsiniz.</p>
+    <footer class="bg-gray-900 text-gray-300 pt-16 pb-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <!-- Marka ve Hakkımızda -->
+                <div class="text-left">
+                    <div class="flex items-center mb-6">
+                        <span class="text-2xl font-black text-white tracking-tighter">İlan<span class="text-indigo-500">Göster</span></span>
+                    </div>
+                    <p class="text-sm leading-relaxed opacity-70">
+                        Emlak profesyonelleri için geliştirilen, güvenli ve hızlı portföy paylaşım platformu. Resimlerinizi korur, hızınızı artırır.
+                    </p>
+                </div>
+
+                <!-- Hızlı Menü -->
+                <div class="md:text-center">
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-widest text-xs">Hızlı Linkler</h4>
+                    <ul class="space-y-4 text-sm">
+                        <li><a href="index.php" class="hover:text-indigo-400 transition">Ana Sayfa</a></li>
+                        <li><a href="kvkk.php" class="hover:text-indigo-400 transition">KVKK Aydınlatma Metni</a></li>
+                        <li><a href="login.php" class="hover:text-indigo-400 transition">Üye Girişi</a></li>
+                    </ul>
+                </div>
+
+                <!-- İletişim -->
+                <div class="md:text-right">
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-widest text-xs">Destek & İletişim</h4>
+                    <p class="text-sm mb-2 opacity-80">Herhangi bir sorunuz mu var?</p>
+                    <a href="tel:05423408943" class="text-xl font-black text-indigo-400 hover:text-indigo-300 transition">0542 340 89 43</a>
+                    <p class="text-xs mt-4 opacity-50 italic">Hafta içi 09:00 - 18:00 destek verilmektedir.</p>
+                </div>
+            </div>
+
+            <!-- Alt Bilgi (Mobile Safe Area) -->
+            <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs opacity-50 pb-[env(safe-area-inset-bottom)] sm:pb-8">
+                <p>&copy; <?php echo date('Y'); ?> ilangoster.com. Tüm hakları saklıdır.</p>
+                <div class="flex gap-6">
+                    <span>Güvenli Resim Paylaşım Platformu</span>
+                </div>
+            </div>
         </div>
     </footer>
 

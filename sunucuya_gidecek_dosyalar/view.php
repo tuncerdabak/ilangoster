@@ -183,7 +183,7 @@ $minutes = floor(($remaining_time % 3600) / 60);
         <?php endif; ?>
     </div>
 
-    <footer class="text-center text-gray-500 text-xs py-6">
+    <footer class="text-center text-gray-500 text-xs py-6 pb-[env(safe-area-inset-bottom)] sm:pb-6">
         &copy; <?= date('Y') ?> İlanGöster.com - Güvenli Portföy Paylaşımı
     </footer>
 

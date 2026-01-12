@@ -19,6 +19,7 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./sunucuya_gidecek_dosyalar/
         server-dir: ./ # Eğer FTP kullanıcısı direkt doğru klasöre login oluyorsa ./ kullanın.
         exclude: | # Yüklenmesini İSTEMEDİĞİNİZ dosya/klasörler
           **/.git*
@@ -28,7 +29,6 @@ jobs:
           task.md
           *.md
           .vscode/**
-          sunucuya_gidecek_dosyalar/**
           "ilangoster.com uygulaması"/**
           "Reklam Görseli"/**
           "Taslak"/**

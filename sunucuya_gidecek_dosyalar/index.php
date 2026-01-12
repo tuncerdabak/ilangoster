@@ -221,7 +221,7 @@ unset($_SESSION['message']);
             </div>
             <div>
                 <p class="text-xs font-bold leading-tight">İlan Göster Android Uygulaması</p>
-                <p class="text-[10px] opacity-80">Hemen indir, ilanlarını cebinden yönet!</p>
+                <p class="text-[10px] opacity-80">Hemen indir, portföyünü her an güvenle paylaş!</p>
             </div>
         </div>
         <a href="indir.php"

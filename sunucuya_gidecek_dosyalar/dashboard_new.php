@@ -158,11 +158,11 @@ if (!$user) {
 
                 <!-- Fotoğraflar -->
                 <div class="mb-6">
-                    <label for="photos" class="block text-left text-sm font-medium text-gray-700 mb-2">
-                        Mülk Fotoğrafları (Birden Fazla Seçilebilir)
+                    <label class="block text-left text-sm font-medium text-gray-700 mb-2">
+                        Mülk Fotoğrafları (Topluca veya Tek Tek Ekleyebilirsiniz)
                     </label>
                     <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:bg-gray-50 transition cursor-pointer"
-                        onclick="document.getElementById('photos').click()">
+                        onclick="document.getElementById('photo-input').click()">
                         <div class="space-y-1 text-center">
                             <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none"
                                 viewBox="0 0 48 48" aria-hidden="true">
@@ -173,26 +173,30 @@ if (!$user) {
                             <div class="flex text-sm text-gray-600">
                                 <span
                                     class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                                    Dosyaları Seçin
+                                    Fotoğraf Ekle
                                 </span>
                                 <p class="pl-1">veya sürükleyip bırakın</p>
                             </div>
                             <p class="text-xs text-gray-500">
-                                PNG, JPG, WEBP
+                                PNG, JPG, WEBP (Max 20MB)
                             </p>
                         </div>
                     </div>
-                    <input type="file" id="photos" name="photos[]" multiple required
-                        accept="image/jpeg, image/png, image/webp" class="hidden">
-                    <div id="file-list" class="mt-4 text-sm text-gray-600 space-y-1"></div>
+                    <!-- Gerçek input gizli kalacak -->
+                    <input type="file" id="photo-input" multiple accept="image/jpeg, image/png, image/webp"
+                        class="hidden">
+
+                    <!-- Seçilen Dosyaların Önizleme Listesi -->
+                    <div id="preview-container" class="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                        <!-- Önizlemeler buraya gelecek -->
+                    </div>
                 </div>
 
                 <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
                     <div class="flex">
                         <div class="flex-shrink-0">
-                            <!-- Heroicon name: solid/information-circle -->
                             <svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                fill="currentColor" aria-hidden="true">
+                                fill="currentColor">
                                 <path fill-rule="evenodd"
                                     d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
                                     clip-rule="evenodd" />
@@ -200,15 +204,15 @@ if (!$user) {
                         </div>
                         <div class="ml-3">
                             <p class="text-sm text-blue-700">
-                                İlan fotoğraflarınız yüklendikten sonra doğrudan Dashboard ekranına yönlendirileceksiniz
-                                ve oradan paylaşım yapabileceksiniz.
+                                <strong id="selected-count">0</strong> fotoğraf seçildi. Yükledikten sonra doğrudan
+                                Dashboard ekranına yönlendirileceksiniz.
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <button type="submit"
-                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
+                <button type="submit" id="submit-btn"
+                    class="w-full flex justify-center py-4 px-4 border border-transparent rounded-xl shadow-lg text-lg font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition disabled:opacity-50 disabled:cursor-not-allowed">
                     Yüklemeyi Başlat
                 </button>
             </form>
@@ -216,46 +220,113 @@ if (!$user) {
     </div>
 
     <script>
-        // File selection feedback
-        document.getElementById('photos').addEventListener('change', function (e) {
-            const list = document.getElementById('file-list');
-            list.innerHTML = '';
-            if (this.files.length > 0) {
-                for (let i = 0; i < this.files.length; i++) {
-                    list.innerHTML += '<div>📸 ' + this.files[i].name + '</div>';
-                }
-            }
-        });
-
-        // Upload Progress Animation
+        let selectedFiles = [];
+        const photoInput = document.getElementById('photo-input');
+        const previewContainer = document.getElementById('preview-container');
+        const selectedCount = document.getElementById('selected-count');
+        const submitBtn = document.getElementById('submit-btn');
         const form = document.querySelector('form');
         const overlay = document.getElementById('loading-overlay');
         const progressBar = document.getElementById('progress-bar');
         const statusText = document.getElementById('upload-status');
 
+        photoInput.addEventListener('change', function (e) {
+            const files = Array.from(e.target.files);
+
+            files.forEach(file => {
+                // Aynı dosyayı (aynı isim ve boyutta) tekrar eklemeyelim
+                if (!selectedFiles.some(f => f.name === file.name && f.size === file.size)) {
+                    selectedFiles.push(file);
+                }
+            });
+
+            updateUI();
+            // Input'u temizle ki aynı dosya tekrar seçildiğinde change event tetiklensin
+            photoInput.value = '';
+        });
+
+        function updateUI() {
+            previewContainer.innerHTML = '';
+
+            selectedFiles.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const div = document.createElement('div');
+                    div.className = 'relative group';
+                    div.innerHTML = `
+                        <img src="${e.target.result}" class="h-24 w-full object-cover rounded-lg shadow-md border border-gray-200">
+                        <button type="button" onclick="removeFile(${index})" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs shadow-lg hover:bg-red-600 transition">
+                            &times;
+                        </button>
+                    `;
+                    previewContainer.appendChild(div);
+                }
+                reader.readAsDataURL(file);
+            });
+
+            selectedCount.innerText = selectedFiles.length;
+            submitBtn.disabled = selectedFiles.length === 0;
+        }
+
+        function removeFile(index) {
+            selectedFiles.splice(index, 1);
+            updateUI();
+        }
+
         form.addEventListener('submit', function (e) {
-            if (document.getElementById('photos').files.length === 0) {
+            e.preventDefault();
+
+            if (selectedFiles.length === 0) {
                 alert('Lütfen en az bir fotoğraf seçin.');
-                e.preventDefault();
                 return;
             }
 
-            // Overlay'i göster
             overlay.classList.add('active');
 
-            // Simüle edilmiş progress
+            const formData = new FormData();
+            formData.append('source', 'dashboard');
+
+            selectedFiles.forEach(file => {
+                formData.append('photos[]', file);
+            });
+
+            // Progress bar'ı simüle et
             let width = 0;
             const interval = setInterval(() => {
-                if (width >= 90) {
+                if (width >= 95) {
                     clearInterval(interval);
                 } else {
-                    let increment = Math.max(0.5, (90 - width) / 10);
+                    let increment = Math.max(0.1, (95 - width) / 20);
                     width += increment;
-                    if (width > 90) width = 90;
                     progressBar.style.width = width + '%';
                     statusText.innerText = '%' + Math.floor(width);
                 }
-            }, 150);
+            }, 100);
+
+            // Gerçekten gönder
+            fetch('upload.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    } else {
+                        // Redirect olmazsa (hata veya json dönmesi durumu)
+                        return response.text().then(text => {
+                            // Eğer sayfa render edildiyse oraya git
+                            document.open();
+                            document.write(text);
+                            document.close();
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Yükleme sırasında bir hata oluştu.');
+                    overlay.classList.remove('active');
+                    clearInterval(interval);
+                });
         });
     </script>
 </body>

@@ -47,6 +47,7 @@ if (isset($_POST['delete_gallery']) && isset($_POST['gallery_id'])) {
                 unlink($full);
         }
         // DB sil
+        $pdo->prepare("DELETE FROM images WHERE gallery_id = ?")->execute([$gid]);
         $pdo->prepare("DELETE FROM galleries WHERE id = ?")->execute([$gid]);
         $msg = "Galeri başarıyla silindi.";
     }
@@ -277,6 +278,10 @@ $total_photos_used = $stmt_photo_usage->fetchColumn() ?: 0;
                                         </svg>
                                         PAYLAŞ
                                     </button>
+                                    <a href="dashboard_edit.php?id=<?= $g['id'] ?>"
+                                        class="flex-grow sm:flex-grow-0 bg-white text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-lg text-xs font-black flex items-center justify-center transition border border-indigo-200 shadow-sm uppercase">
+                                        DÜZENLE
+                                    </a>
                                     <a href="g/<?= $g['unique_token'] ?>" target="_blank"
                                         class="flex-grow sm:flex-grow-0 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 px-4 py-2 rounded-lg text-xs font-bold flex items-center justify-center transition border border-indigo-100 italic">
                                         GİZLİ LİNK

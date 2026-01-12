@@ -256,7 +256,7 @@ unset($_SESSION['message']);
                     Portföy Yönetim Ekranı
                 </h1>
                 <p class="text-xl font-light mb-12 opacity-90">
-                    Yeni ilan fotoğraflarınızı güvenle yükleyin.
+                    Portföy resimlerinizi hemen koruma altına alın.
                 </p>
             <?php else: ?>
                 <h1 class="text-6xl font-extrabold mb-4 leading-tight">
